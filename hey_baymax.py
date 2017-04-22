@@ -11,7 +11,7 @@ api = tweepy.API(auth)
 
 console.log("Baymax has started\n")
 
-print "..."
+print("...")
 #for diagnose in ct:
 # def talking():
 #    for line in baymax_quotes.tweetlist:
