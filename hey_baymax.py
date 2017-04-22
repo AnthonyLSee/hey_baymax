@@ -36,6 +36,9 @@ def main():
 
     while(True):
         myStream.filter(track=['@hey_baymax'])
+
+
+
     #
     # mentions = api.mentions_timeline(count=1)
     #
