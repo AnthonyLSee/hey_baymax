@@ -10,6 +10,7 @@ api = tweepy.API(auth)
 console.log("Baymax has started\n")
 
 print("...")
+
 #for diagnose in ct:
 # def talking():
 #    for line in baymax_quotes.tweetlist:
@@ -18,7 +19,3 @@ print("...")
 #        print "..."
 #        time.sleep(40)
 # talking()
-
-
-
-# I should have stayed an art major
