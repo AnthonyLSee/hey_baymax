@@ -1,49 +1,9 @@
-<<<<<<< Updated upstream
-
 
 import tweepy, time
-=======
-import tweepy, time, json
->>>>>>> Stashed changes
+import tweetlist as bq
 from credentials import *
 from console import console
 from streamclass import *
-
-
-<<<<<<< Updated upstream
-import tweetlist as bq
-
-
-=======
-override tweepy.StreamListener to add logic to on_status
-
-
-class MyStreamListener(tweepy.StreamListener):
-
-    def on_status(self, status):
-        print(status.text)
-
-myStreamListener = MyStreamListener()
-myStream = tweepy.Stream(auth = api.auth, listener = myStreamListener())
-myStream.filter(track=['python'])
-
-#onsole.log("Baymax has started\n")
-#console.log(api.on_status)
-#print(api.on_status)
-# print(api.me())
-#m = api.me()
-#a = m.to_json("test.json")
-#print("Baymax has stopped")
->>>>>>> Stashed changes
-
-#for diagnose in ct:
-# def talking():
-#    for line in bq.tweetlist:
-#        api.update_status(line)
-#        print(line)
-#        print "..."
-#        time.sleep(40)
-# talking()
 
 
 def respondBack(api,user):      # tweepy Obj and username
@@ -74,12 +34,5 @@ def main():
     #
     #     # If got message, use respondBack
 
-
-
-
-
-
-
 if __name__ == "__main__":
     main()
-
