@@ -1,7 +1,5 @@
-import tweepy, time, json
+import tweepy, time
 from credentials import *
-import tweetlist as bs
-import catcher as ct
 from console import console
 
 auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
