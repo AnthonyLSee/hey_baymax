@@ -11,13 +11,17 @@ database = {"flu":['dizzy', 'dizziness', 'tired', 'sleepy', 'not feeling well',
                 'stomache ache', 'stomach pain', 'vomiting', 'puking', 'sore throat',
                     'pain', 'swollen throat', 'fatigue', 'extreme fatigue', 'cold',
                         'diarrhea','fever', 'high fever', 'stuffy nose', 'watery eyes',
-                            'runny nose', 'ear ache', 'stiff neck', 'sneezying',
-                                'virus', 'congestion', 'body ache', 'runny nose'],
+                            'runny nose', 'ear ache', 'stiff neck', 'sneezing',
+                                'virus', 'congestion', 'body ache', 'runny nose',
+                                'sick', 'coughing', 'cough', 'sneeze', 'sickly',
+                                'nausea', 'weak muscle', 'weak muscles'],
                 "adhd": ['hyperactivity', 'inattention', 'easily distracted'],
                 "aids": ['aids', 'hiv', 'sexually active', 'sex'],
-                "alzheimers": ['forgetful', 'get lost', 'alzheimers'],
+                "alzheimers": ['forgetful', 'get lost', 'alzheimers', 'dementia',
+                                ],
                 "arthritis": ['gout', 'joint', 'joints', 'stiff', 'stiff joints',
-                                'swelling', 'redness'],
+                                'swelling', 'redness', 'feet stiff', 'sore muscles',
+                                'sore bones'],
                 "diabetes": ['high blood pressure', 'lightheaded', 'diabetic',
                                 'overweight', 'fat', 'pee often', 'numbness'],
                 "cancer": ['cancer', 'lung cancer', 'skin cancer'],
@@ -25,7 +29,7 @@ database = {"flu":['dizzy', 'dizziness', 'tired', 'sleepy', 'not feeling well',
                             'chest pressure', 'inflamed throat'],
                 "rabies": ['bit by', 'bitten by' 'bite marks'],
                 "taken drugs": ['overdose', 'weed', 'crack', 'meth', 'taken drugs',
-                                    'took drugs'],
+                                    'took drugs', 'drugs'],
                 "taken alcohol": ['drinking beer', 'wine', 'liquor', 'drunk', 'tipsy']
                                 }
 database_url = {"flu": "https://goo.gl/Ab6vRn",
@@ -119,6 +123,7 @@ class MyStreamListener(tweepy.StreamListener):
     def on_status(self, status):
         print("Mention Recieved\n")
         userObj = status.user
+        print(userObj.created_at)
         print(userObj.screen_name)
         userScreen_name = str(userObj.screen_name)
         textbody = status.text
