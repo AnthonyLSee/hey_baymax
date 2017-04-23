@@ -1,28 +1,15 @@
 
-
 import tweepy, time
+import tweetlist as bq
+from catcher import *
 from credentials import *
 from console import console
 from streamclass import *
 
-
-import tweetlist as bq
-
-
-
-#for diagnose in ct:
-# def talking():
-#    for line in bq.tweetlist:
-#        api.update_status(line)
-#        print(line)
-#        print "..."
-#        time.sleep(40)
-# talking()
-
-
-def respondBack(api,user):      # tweepy Obj and username
+def respondBack(api,user):     # tweepy Obj and username
     api.update_status("Hello {}!".format(user))
 
+print(api.get_user(screen_name))
 
 def main():
     auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
@@ -51,12 +38,5 @@ def main():
     #
     #     # If got message, use respondBack
 
-
-
-
-
-
-
 if __name__ == "__main__":
     main()
-
