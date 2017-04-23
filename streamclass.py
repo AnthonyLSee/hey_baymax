@@ -12,22 +12,36 @@ database = {"flu":['dizzy', 'dizziness', 'tired', 'sleepy', 'not feeling well',
                     'pain', 'swollen throat', 'fatigue', 'extreme fatigue', 'cold',
                         'diarrhea','fever', 'high fever', 'stuffy nose', 'watery eyes',
                             'runny nose', 'ear ache', 'stiff neck', 'sneezying',
-                                'virus', 'congestion'],
+                                'virus', 'congestion', 'body ache', 'runny nose'],
                 "adhd": ['hyperactivity', 'inattention', 'easily distracted'],
-                "aids": ['aids', 'hiv'],
-                "alzheimers": ['forgetful', 'get lost'],
+                "aids": ['aids', 'hiv', 'sexually active', 'sex'],
+                "alzheimers": ['forgetful', 'get lost', 'alzheimers'],
                 "arthritis": ['gout', 'joint', 'joints', 'stiff', 'stiff joints',
-                                'swelling', 'redness']
+                                'swelling', 'redness'],
+                "diabetes": ['high blood pressure', 'lightheaded', 'diabetic',
+                                'overweight', 'fat', 'pee often', 'numbness'],
+                "cancer": ['cancer', 'lung cancer', 'skin cancer'],
+                "asthma": ['shortness of breath', 'weezing', 'chest pain',
+                            'chest pressure', 'inflamed throat'],
+                "rabies": ['bit by', 'bitten by' 'bite marks'],
+                "taken drugs": ['overdose', 'weed', 'crack', 'meth', 'taken drugs',
+                                    'took drugs'],
+                "taken alcohol": ['drinking beer', 'wine', 'liquor', 'drunk', 'tipsy']
                                 }
 database_url = {"flu": "https://goo.gl/Ab6vRn",
                     "adhd" : "https://goo.gl/LQ7CwJ",
                         "aids": "https://goo.gl/6YeXBh",
                             "alzheimers": "https://goo.gl/0wV6s3",
-                                "arthritis": "https://goo.gl/VIFTW2"}
+                                "arthritis": "https://goo.gl/VIFTW2",
+                                    "diabetes": "https://goo.gl/0IoOsC",
+                                        "cancer": "https://goo.gl/QXWuz7",
+                                            "asthma": "https://goo.gl/ILIj6t",
+                                                "rabies": "https://goo.gl/9z91ID",
+                                            "taken drugs": "https://goo.gl/LF6L7B",
+                                        "taken alcohol": "https://goo.gl/xVXxKu"}
 
 def findDisease(text, dic):
    # Bigger the counter --> more symptoms --> higher possibliy that its x disease
-
     listofText = text.split()                   # str -> list
     bigList = []                                # bigList will hold all the holders
     holder = []                                 # holder will hold disease and symptom counter
@@ -54,64 +68,52 @@ def findDisease(text, dic):
     return highestProb[0]                       # Return disease
 
 def formatPossibility(user,disease):
-    wholeString = ""
-    stringSetOne = ["Hello","Hey"]
-    stringSetTwo = ["your symptoms show","I believe","there's a possibility"]
-    random.shuffle(stringSetOne)
-    random.shuffle(stringSetTwo)
 
-    wholeString = "{} @{} , {} that you could have {}. Here's a link for more info {}".format(
-        stringSetOne[0],user,stringSetTwo[0],disease,database_url.get(disease))
-    return wholeString
+    fullResponse = ""
+    pos_greeting = ["Hello" , "Hey", "Hi"]
+    pos_resp = ["your symptoms show"," signs suggest","there's a possibility"]
 
+    random.shuffle(pos_greeting)
+    random.shuffle(pos_resp)
+
+    fullResponse = "{} @{} {} that you may have {}. Here's a link for more info {}".format(
+        pos_greeting[0], user, pos_resp[0], disease, database_url.get(disease))
+
+    return fullResponse
 
 def formatError(user):
-    wholeString = ""
-    stringSetOne = ["Hello","Hey"]
-    stringSetTwo = ["cannot","can't","did not"]
-    stringSetThree = ["issue","problem","illness"]
-    stringSetFour = ["!","!!","!!!"]
-    stringSets = [stringSetOne,stringSetTwo,stringSetThree,stringSetFour]
+    fullResponse = ""
+    err_greeting = ["Hello","Hey", "Hi"]
+    err_resp01 = ["cannot", "can't", "could not", "didn't", "did not"]
+    err_resp02 = ["issue", "problem", "illness"]
+    err_punct = [".", "..", "!", "!!"]
+    stringSets = [err_greeting, err_resp01, err_resp02, err_punct]
     for set in stringSets:
         random.shuffle(set)
-    wholeString = "{} @{} I {} find a possible {} with the symptoms you provided{}".format(
-        stringSetOne[0],user,stringSetTwo[0],stringSetThree[0],stringSetFour[0]
+    fullResponse = "{} @{} I {} find a possible {} with the symptom(s) you provided{}".format(
+        err_greeting[0], user, err_resp01[0], err_resp02[0], err_punct[0]
     )
-    return wholeString
-
+    return fullResponse
 
 class MyStreamListener(tweepy.StreamListener):
 
     def respondBack(self,user, status, disease): # corrected
-        greetings = ["Hey","Yo!","Whats up","Hello"]
-        end1 = ["!","!!","!!!","!!!!"]
-        end2 = [" bleep"," bloop"," skeet"," skert"]
 
         bodyText = status.replace("@hey_baymax ","")
         print(bodyText) # corrected
         time.sleep(4)
-        random.shuffle(greetings)
-        random.shuffle(end1)
-        random.shuffle(end2)
 
-        print("Response Queueing\n") #our error checking
+        print("\nResponse Queueing\n")
         time.sleep(4)
 
         if disease in database:
             sendString = formatPossibility(user,disease)
             api.update_status(sendString)
-            # Still need to parise status
-            # Use api.update_status
-            #api.update_status("Hello @{} ,I think you could have {}!".format(user,disease))
-            #print "Phase 2"
-            #time.sleep(5) # Time Delay in Reply
-            #api.update_status("Here @{} , read more here {}".format(user,)) #create webMD style links
-            #print("Hey @{} " + " I think you may have the flu!", user)
             print "First Response Sent.\n"
+
         else:
             sendString = formatError(user)
             api.update_status(sendString)
-            #api.update_status("{} @{} {}{}".format(greetings[0],user,end1[0],end2[0]))
             print "Second Response Sent.\n"
 
     def on_status(self, status):
