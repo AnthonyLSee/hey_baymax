@@ -105,10 +105,10 @@ class MyStreamListener(tweepy.StreamListener):
 
         bodyText = status.replace("@hey_baymax ","")
         print(bodyText) # corrected
-        time.sleep(4)
+        time.sleep(2)
 
         print("\nResponse Queueing\n")
-        time.sleep(4)
+        time.sleep(2)
 
         if disease in database:
             sendString = formatPossibility(user,disease)
