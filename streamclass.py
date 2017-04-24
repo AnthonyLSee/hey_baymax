@@ -1,5 +1,4 @@
 import tweepy, time
-from catcher import *
 from credentials import *
 import random
 
@@ -10,11 +9,11 @@ api = tweepy.API(auth)
 database = {"flu":['dizzy', 'dizziness', 'tired', 'sleepy', 'not feeling well',
                 'stomache ache', 'stomach pain', 'vomiting', 'puking', 'sore throat',
                     'pain', 'swollen throat', 'fatigue', 'extreme fatigue', 'cold',
-                        'diarrhea','fever', 'high fever', 'stuffy nose', 'watery eyes',
+                        'diarrhea','fever', 'severe fever', 'stuffy nose', 'watery eyes',
                             'runny nose', 'ear ache', 'stiff neck', 'sneezing',
                                 'virus', 'congestion', 'body ache', 'runny nose',
                                 'sick', 'coughing', 'cough', 'sneeze', 'sickly',
-                                'nausea', 'weak muscle', 'weak muscles'],
+                                'nausea', 'weak muscle', 'weak muscles', 'lightheaded'],
                 "adhd": ['hyperactivity', 'inattention', 'easily distracted'],
                 "aids": ['aids', 'hiv', 'sexually active', 'sex'],
                 "alzheimers": ['forgetful', 'get lost', 'alzheimers', 'dementia',
@@ -22,15 +21,15 @@ database = {"flu":['dizzy', 'dizziness', 'tired', 'sleepy', 'not feeling well',
                 "arthritis": ['gout', 'joint', 'joints', 'stiff', 'stiff joints',
                                 'swelling', 'redness', 'feet stiff', 'sore muscles',
                                 'sore bones'],
-                "diabetes": ['high blood pressure', 'lightheaded', 'diabetic',
+                "diabetes": ['blood pressure', 'diabetic',
                                 'overweight', 'fat', 'pee often', 'numbness'],
                 "cancer": ['cancer', 'lung cancer', 'skin cancer'],
-                "asthma": ['shortness of breath', 'weezing', 'chest pain',
+                "asthma": ['shortness of breath', 'wheezing', 'chest pain',
                             'chest pressure', 'inflamed throat'],
-                "rabies": ['bit by', 'bitten by' 'bite marks'],
-                "taken drugs": ['overdose', 'weed', 'crack', 'meth', 'taken drugs',
+                "rabies": ['bit', 'bitten' 'bite'],
+                "taken drugs": ['overdose', 'weed', 'crack', 'meth', 'high',
                                     'took drugs', 'drugs'],
-                "taken alcohol": ['drinking beer', 'wine', 'liquor', 'drunk', 'tipsy']
+                "taken alcohol": ['wine', 'liquor', 'drunk', 'tipsy']
                                 }
 database_url = {"flu": "https://goo.gl/Ab6vRn",
                     "adhd" : "https://goo.gl/LQ7CwJ",
@@ -123,7 +122,8 @@ class MyStreamListener(tweepy.StreamListener):
     def on_status(self, status):
         print("Mention Recieved\n")
         userObj = status.user
-        print(userObj.created_at)
+        # print(status.location) #location of Status Update
+        print(status.created_at) # status date in UCT
         print(userObj.screen_name)
         userScreen_name = str(userObj.screen_name)
         textbody = status.text
