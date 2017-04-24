@@ -1,7 +1,5 @@
 
 import tweepy, time
-import tweetlist as bq
-# from catcher import *
 from credentials import *
 from console import console
 from streamclass import *
